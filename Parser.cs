@@ -23,6 +23,10 @@ public class Parser
             {
                 stack.Push(number);
             }
+            else if (IsInfixOperator(token, stack))
+            {
+                HandleInfixOperator(token, stack);
+            }
             else
             {
                 var left = stack.Pop();
@@ -33,6 +37,29 @@ public class Parser
         }
 
         return stack.Pop();
+    }
+
+    private void HandleInfixOperator(string token, Stack<int> stack)
+    {
+        var number = _tokenizer.GetNextToken();
+        if (int.TryParse(number, out var num))
+        {
+            num = token == "-" ? num * -1 : num; // handle negative numbers
+            stack.Push(num);
+        }
+        else
+        {
+            throw new InvalidOperationException($"Invalid right number {number}");
+        }
+    }
+
+    private bool IsInfixOperator(string token, Stack<int> stack)
+    {
+        if (token is not ("+" or "-")) return false;
+
+        if (stack.Count >= 1 || _tokenizer.EndOfExpression)
+            return false;
+        return true;
     }
 
     private int GetLeftNumber()
