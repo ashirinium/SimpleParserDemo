@@ -7,7 +7,6 @@ namespace SimpleExpressionParser;
 
 public class Parser
 {
-    
     private readonly Tokenizer _tokenizer;
     public Parser(string expression)
     {
@@ -53,8 +52,14 @@ public class Parser
             "+" => left + right,
             "-" => left - right,
             "*" => left * right,
-            "/" => left / right,
+            "/" => Divide(left, right),
             _ => throw new InvalidOperationException($"Unknown operation {operation}")
         };
+    }
+
+    private int Divide(int num, int denominator)
+    {
+        if (denominator == 0) throw new DivideByZeroException();
+        return num / denominator;
     }
 }
