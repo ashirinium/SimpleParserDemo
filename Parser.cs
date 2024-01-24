@@ -1,4 +1,6 @@
-﻿namespace SimpleExpressionParser;
+﻿using System.Collections;
+
+namespace SimpleExpressionParser;
 // ReSharper disable once ConvertIfStatementToReturnStatement
 // Resharper disable once heuristically unreachable code
 // ReSharper disable once helper
@@ -15,10 +17,9 @@ public class Parser
     public int Parse()
     {
         var stack = new Stack<int>();
-        var token = string.Empty;
         while (_tokenizer.EndOfExpression is false)
-        { 
-            token = _tokenizer.GetNextToken();
+        {
+            var token = _tokenizer.GetNextToken();
             if (int.TryParse(token, out var number))
             {
                 stack.Push(number);

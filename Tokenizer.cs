@@ -13,6 +13,7 @@ public class Tokenizer
     
     public string GetNextToken()
     {
+        RemoveWhiteSpace();
         var token = string.Empty;
         var c = _expression[0];
         if (IsOperator(c))
@@ -28,8 +29,6 @@ public class Tokenizer
         return token;
     }
 
-   
-
     private string GetNumber()
     {
         // extract all digits until a non digit is found.
@@ -43,5 +42,16 @@ public class Tokenizer
     {
         return c is '+' or '-' or '*' or '/';
     }
+    
+    
+    private void RemoveWhiteSpace()
+    {
+        var curr = 0;
+        while (char.IsWhiteSpace(_expression[curr])) 
+            curr++;
+        
+        _expression = _expression[curr..];
+    }
+    
 }
 
