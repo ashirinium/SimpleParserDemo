@@ -26,6 +26,12 @@ public class Tokenizer
     {
         var token = string.Empty;
         var c = _expression[0];
+        
+        if (char.IsWhiteSpace(c))
+        {
+            RemoveWhiteSpace();
+            c = _expression[0];
+        }       
         if (IsOperator(c))
         {
             token = GetOperator();
