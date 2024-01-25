@@ -1,6 +1,4 @@
-﻿using System.Collections;
-
-namespace SimpleExpressionParser;
+﻿namespace SimpleExpressionParser;
 // ReSharper disable once ConvertIfStatementToReturnStatement
 // Resharper disable once heuristically unreachable code
 // ReSharper disable once helper

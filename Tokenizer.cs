@@ -2,7 +2,6 @@
 
 public class Tokenizer
 {
-    private string CurrentToken = string.Empty;
     private string _expression;
     public bool EndOfExpression => _expression.Length == 0;
     
@@ -11,30 +10,50 @@ public class Tokenizer
         _expression = expression;
     }
     
+    public List<string> Tokenize()
+    {
+        var tokens = new List<string>();
+        while (EndOfExpression is false)
+        {
+            var token = GetNextToken();
+            tokens.Add(token);
+        }
+
+        return tokens;
+    }
+    
     public string GetNextToken()
     {
-        RemoveWhiteSpace();
         var token = string.Empty;
         var c = _expression[0];
         if (IsOperator(c))
         {
-            token = c.ToString();
+            token = GetOperator();
         }
         if (char.IsDigit(c))
         {
             token = GetNumber();
         }
-        
-        _expression = _expression[token.Length..];
         return token;
+    }
+
+    private string GetOperator()
+    {
+        var op = _expression[0];
+        _expression = _expression[1..];
+        return op.ToString();
     }
 
     private string GetNumber()
     {
-        // extract all digits until a non digit is found.
-        var number = _expression.
-            TakeWhile(char.IsDigit).
-            Aggregate(string.Empty, (current, c) => current + c);
+        var number = string.Empty;
+        var index = 0;
+        while (index < _expression.Length && char.IsDigit(_expression[index]))
+        {
+            number += _expression[index];
+            index++;
+        }
+        _expression = _expression[index..];
         return number;
     }
 
@@ -42,7 +61,6 @@ public class Tokenizer
     {
         return c is '+' or '-' or '*' or '/' or '^';
     }
-    
     
     private void RemoveWhiteSpace()
     {

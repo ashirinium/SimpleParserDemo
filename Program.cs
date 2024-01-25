@@ -1,15 +1,14 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using SimpleExpressionParser;
 
-var expressions = new[]
+void PrintList(List<string> tokens)
 {
-    // "1 + 3",
-    // "1 - 2",
-    // "1 * 2",
-    // "1 / 2",
-    "1+2",
-    ""
-};
+    Console.WriteLine("Tokens:");
+    foreach (var token in tokens)
+    {
+        Console.WriteLine($"\"{token}\"");
+    }
+}
 
 while (true)
 {
@@ -18,13 +17,12 @@ while (true)
         Console.WriteLine("Enter an expression or press \"Q\" to exit:");
         var exp = Console.ReadLine()!;
         if(exp.ToLower() == "q") break;
-        
-        var result = new Parser(exp).Parse();
-        Console.WriteLine($"{exp} = {result}");
+        var result = new Tokenizer(exp).Tokenize();
+        PrintList(result);
     }
-    catch (DivideByZeroException e)
+    catch (Exception e)
     {
-        Console.WriteLine("Division by zero is undefined");
+        Console.WriteLine("Some error occurred. Please try again.");
     }
 }
 
