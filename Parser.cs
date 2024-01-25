@@ -80,6 +80,7 @@ public class Parser
             "-" => left - right,
             "*" => left * right,
             "/" => Divide(left, right),
+            "^" => (int) Math.Pow(left, right),
             _ => throw new InvalidOperationException($"Unknown operation {operation}")
         };
     }

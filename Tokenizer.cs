@@ -40,7 +40,7 @@ public class Tokenizer
 
     private static bool IsOperator(char c)
     {
-        return c is '+' or '-' or '*' or '/';
+        return c is '+' or '-' or '*' or '/' or '^';
     }
     
     
