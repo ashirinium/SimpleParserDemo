@@ -53,13 +53,17 @@ public class Tokenizer
     private string GetNumber()
     {
         var number = string.Empty;
-        var index = 0;
-        while (index < _expression.Length && char.IsDigit(_expression[index]))
+        var c = _expression[0];
+        while (!IsOperator(c))
         {
-            number += _expression[index];
-            index++;
+            if (char.IsDigit(c))
+            {
+                number += c; 
+            }
+            _expression = _expression[1..];
+            if (EndOfExpression) break;
+            c = _expression[0]; 
         }
-        _expression = _expression[index..];
         return number;
     }
 
